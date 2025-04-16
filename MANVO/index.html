@@ -158,80 +158,6 @@
             font-weight: bold;
         }
 
-        .todo-section {
-            background-color: var(--card-bg);
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: var(--shadow);
-            margin-bottom: 30px;
-        }
-
-        .todo-header {
-            display: flex;
-            margin-bottom: 20px;
-        }
-
-        .todo-input {
-            flex: 1;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px 0 0 5px;
-            font-size: 1rem;
-        }
-
-        .add-todo-btn {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 0 5px 5px 0;
-            cursor: pointer;
-        }
-
-        .todo-list {
-            list-style-type: none;
-            margin-top: 20px;
-        }
-
-        .todo-item {
-            display: flex;
-            align-items: center;
-            padding: 12px;
-            border-bottom: 1px solid #eee;
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .todo-checkbox {
-            margin-right: 10px;
-            width: 20px;
-            height: 20px;
-            cursor: pointer;
-        }
-
-        .todo-text {
-            flex: 1;
-            font-size: 1rem;
-        }
-
-        .todo-text.completed {
-            text-decoration: line-through;
-            color: #888;
-        }
-
-        .delete-todo {
-            background-color: transparent;
-            color: #e74c3c;
-            border: none;
-            cursor: pointer;
-            font-size: 1.2rem;
-            margin-left: 10px;
-        }
-
         .store-section {
             background-color: var(--card-bg);
             border-radius: 15px;
@@ -248,7 +174,7 @@
 
         .themes-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 20px;
         }
 
@@ -265,7 +191,7 @@
         }
 
         .theme-preview {
-            height: 120px;
+            height: 150px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -285,22 +211,6 @@
 
         .lavender-theme {
             background: linear-gradient(120deg, #9b59b6, #8e44ad);
-        }
-
-        .midnight-theme {
-            background: linear-gradient(120deg, #34495e, #2c3e50);
-        }
-
-        .candy-theme {
-            background: linear-gradient(120deg, #f368e0, #ff9ff3);
-        }
-
-        .mint-theme {
-            background: linear-gradient(120deg, #0be881, #00d8d6);
-        }
-
-        .autumn-theme {
-            background: linear-gradient(120deg, #e67e22, #d35400);
         }
 
         .theme-info {
@@ -427,25 +337,6 @@
             color: #721c24;
         }
 
-        .tab-container {
-            display: flex;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .tab {
-            padding: 10px 20px;
-            cursor: pointer;
-            border-bottom: 3px solid transparent;
-            transition: all 0.3s ease;
-        }
-
-        .tab.active {
-            border-bottom-color: var(--primary-color);
-            color: var(--primary-color);
-            font-weight: bold;
-        }
-
         footer {
             text-align: center;
             margin-top: 40px;
@@ -469,7 +360,7 @@
             }
 
             .themes-grid {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             }
         }
 
@@ -478,12 +369,12 @@
                 font-size: 3rem;
             }
 
-            .timer-section, .store-section, .todo-section {
+            .timer-section, .store-section {
                 padding: 20px;
             }
 
             .themes-grid {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -520,17 +411,6 @@
                 <div class="coins-earned" id="earned-message"></div>
             </section>
 
-            <section class="todo-section">
-                <h2 class="section-title">To-Do List</h2>
-                <div class="todo-header">
-                    <input type="text" class="todo-input" id="todo-input" placeholder="Add a new task...">
-                    <button class="add-todo-btn" id="add-todo-btn">Add</button>
-                </div>
-                <ul class="todo-list" id="todo-list">
-                    <!-- Todo items will be added here dynamically -->
-                </ul>
-            </section>
-
             <section class="store-section">
                 <h2 class="section-title">Theme Store</h2>
                 <div class="status-message" id="status-message"></div>
@@ -539,64 +419,32 @@
                         <div class="theme-preview forest-theme"></div>
                         <div class="theme-info">
                             <div class="theme-name">Forest Theme</div>
-                            <div class="theme-price"><span class="coin-icon">🪙</span> 20</div>
-                            <button class="buy-button" data-theme="forest" data-price="20">Purchase</button>
+                            <div class="theme-price"><span class="coin-icon">🪙</span> 50</div>
+                            <button class="buy-button" data-theme="forest" data-price="50">Purchase</button>
                         </div>
                     </div>
                     <div class="theme-card">
                         <div class="theme-preview ocean-theme"></div>
                         <div class="theme-info">
                             <div class="theme-name">Ocean Theme</div>
-                            <div class="theme-price"><span class="coin-icon">🪙</span> 25</div>
-                            <button class="buy-button" data-theme="ocean" data-price="25">Purchase</button>
+                            <div class="theme-price"><span class="coin-icon">🪙</span> 75</div>
+                            <button class="buy-button" data-theme="ocean" data-price="75">Purchase</button>
                         </div>
                     </div>
                     <div class="theme-card">
                         <div class="theme-preview sunset-theme"></div>
                         <div class="theme-info">
                             <div class="theme-name">Sunset Theme</div>
-                            <div class="theme-price"><span class="coin-icon">🪙</span> 30</div>
-                            <button class="buy-button" data-theme="sunset" data-price="30">Purchase</button>
+                            <div class="theme-price"><span class="coin-icon">🪙</span> 100</div>
+                            <button class="buy-button" data-theme="sunset" data-price="100">Purchase</button>
                         </div>
                     </div>
                     <div class="theme-card">
                         <div class="theme-preview lavender-theme"></div>
                         <div class="theme-info">
                             <div class="theme-name">Lavender Theme</div>
-                            <div class="theme-price"><span class="coin-icon">🪙</span> 35</div>
-                            <button class="buy-button" data-theme="lavender" data-price="35">Purchase</button>
-                        </div>
-                    </div>
-                    <div class="theme-card">
-                        <div class="theme-preview midnight-theme"></div>
-                        <div class="theme-info">
-                            <div class="theme-name">Midnight Theme</div>
-                            <div class="theme-price"><span class="coin-icon">🪙</span> 40</div>
-                            <button class="buy-button" data-theme="midnight" data-price="40">Purchase</button>
-                        </div>
-                    </div>
-                    <div class="theme-card">
-                        <div class="theme-preview candy-theme"></div>
-                        <div class="theme-info">
-                            <div class="theme-name">Candy Theme</div>
-                            <div class="theme-price"><span class="coin-icon">🪙</span> 45</div>
-                            <button class="buy-button" data-theme="candy" data-price="45">Purchase</button>
-                        </div>
-                    </div>
-                    <div class="theme-card">
-                        <div class="theme-preview mint-theme"></div>
-                        <div class="theme-info">
-                            <div class="theme-name">Mint Theme</div>
-                            <div class="theme-price"><span class="coin-icon">🪙</span> 50</div>
-                            <button class="buy-button" data-theme="mint" data-price="50">Purchase</button>
-                        </div>
-                    </div>
-                    <div class="theme-card">
-                        <div class="theme-preview autumn-theme"></div>
-                        <div class="theme-info">
-                            <div class="theme-name">Autumn Theme</div>
-                            <div class="theme-price"><span class="coin-icon">🪙</span> 55</div>
-                            <button class="buy-button" data-theme="autumn" data-price="55">Purchase</button>
+                            <div class="theme-price"><span class="coin-icon">🪙</span> 125</div>
+                            <button class="buy-button" data-theme="lavender" data-price="125">Purchase</button>
                         </div>
                     </div>
                 </div>
@@ -657,7 +505,6 @@
         let userCoins = 0;
         let ownedThemes = ['default'];
         let activeTheme = 'default';
-        let todos = [];
 
         // Theme configurations
         const themes = {
@@ -700,38 +547,6 @@
                 textColor: '#4a148c',
                 accentColor: '#7e57c2',
                 cardBg: '#ffffff'
-            },
-            midnight: {
-                primaryColor: '#34495e',
-                secondaryColor: '#7f8c8d',
-                backgroundColor: '#263238',
-                textColor: '#ecf0f1',
-                accentColor: '#3498db',
-                cardBg: '#2c3e50'
-            },
-            candy: {
-                primaryColor: '#f368e0',
-                secondaryColor: '#ff9ff3',
-                backgroundColor: '#ffeaa7',
-                textColor: '#6c5ce7',
-                accentColor: '#fd79a8',
-                cardBg: '#ffffff'
-            },
-            mint: {
-                primaryColor: '#0be881',
-                secondaryColor: '#00d8d6',
-                backgroundColor: '#e0fff4',
-                textColor: '#009432',
-                accentColor: '#00cec9',
-                cardBg: '#ffffff'
-            },
-            autumn: {
-                primaryColor: '#e67e22',
-                secondaryColor: '#d35400',
-                backgroundColor: '#fffaf0',
-                textColor: '#7f4e1d',
-                accentColor: '#be5504',
-                cardBg: '#ffffff'
             }
         };
 
@@ -754,9 +569,6 @@
         const registerCancel = document.getElementById('register-cancel');
         const statusMessage = document.getElementById('status-message');
         const buyButtons = document.querySelectorAll('.buy-button');
-        const todoInput = document.getElementById('todo-input');
-        const addTodoBtn = document.getElementById('add-todo-btn');
-        const todoList = document.getElementById('todo-list');
 
         // Format time (seconds -> MM:SS)
         function formatTime(seconds) {
@@ -842,8 +654,7 @@
                     coins: userCoins,
                     ownedThemes: ownedThemes,
                     activeTheme: activeTheme,
-                    totalTimeStudied: totalTimeStudied,
-                    todos: todos
+                    totalTimeStudied: totalTimeStudied
                 };
                 
                 localStorage.setItem(`manvo_${currentUser}`, JSON.stringify(userData));
@@ -860,24 +671,20 @@
                 ownedThemes = parsedData.ownedThemes || ['default'];
                 activeTheme = parsedData.activeTheme || 'default';
                 totalTimeStudied = parsedData.totalTimeStudied || 0;
-                todos = parsedData.todos || [];
                 
                 updateCoinsDisplay();
                 applyTheme(activeTheme);
                 updateThemeButtons();
-                renderTodos();
             } else {
                 // New user
                 userCoins = 0;
                 ownedThemes = ['default'];
                 activeTheme = 'default';
                 totalTimeStudied = 0;
-                todos = [];
                 
                 updateCoinsDisplay();
                 applyTheme('default');
                 updateThemeButtons();
-                renderTodos();
             }
         }
 
@@ -942,3 +749,181 @@
                 }
             }
         }
+
+        // Show status message
+        function showStatusMessage(message, type) {
+            statusMessage.textContent = message;
+            statusMessage.className = `status-message ${type}`;
+            statusMessage.style.display = "block";
+            
+            setTimeout(() => {
+                statusMessage.style.display = "none";
+            }, 3000);
+        }
+
+        // Check if user is logged in (from localStorage)
+        function checkLoginStatus() {
+            const loggedInUser = localStorage.getItem('manvo_current_user');
+            
+            if (loggedInUser) {
+                currentUser = loggedInUser;
+                loginBtn.style.display = 'none';
+                registerBtn.style.display = 'none';
+                logoutBtn.style.display = 'block';
+                loadUserData(currentUser);
+            } else {
+                loginBtn.style.display = 'block';
+                registerBtn.style.display = 'block';
+                logoutBtn.style.display = 'none';
+            }
+        }
+
+        // Handle login
+        function handleLogin() {
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+            
+            if (!username || !password) {
+                alert("Please enter both username and password");
+                return;
+            }
+            
+            // Simple password check (in real app, this would be more secure)
+            const storedPassword = localStorage.getItem(`manvo_password_${username}`);
+            
+            if (storedPassword === password) {
+                currentUser = username;
+                localStorage.setItem('manvo_current_user', username);
+                loadUserData(username);
+                loginModal.style.display = 'none';
+                loginBtn.style.display = 'none';
+                registerBtn.style.display = 'none';
+                logoutBtn.style.display = 'block';
+                
+                // Clear login form
+                document.getElementById('login-username').value = '';
+                document.getElementById('login-password').value = '';
+                
+                showStatusMessage(`Welcome back, ${username}!`, "success");
+            } else {
+                alert("Invalid username or password");
+            }
+        }
+
+        // Handle registration
+        function handleRegister() {
+            const username = document.getElementById('register-username').value;
+            const password = document.getElementById('register-password').value;
+            
+            if (!username || !password) {
+                alert("Please enter both username and password");
+                return;
+            }
+            
+            // Check if username already exists
+            if (localStorage.getItem(`manvo_password_${username}`)) {
+                alert("Username already exists. Please choose another one.");
+                return;
+            }
+            
+            // Store user credentials (in real app, this would be more secure)
+            localStorage.setItem(`manvo_password_${username}`, password);
+            
+            // Create initial user data
+            currentUser = username;
+            localStorage.setItem('manvo_current_user', username);
+            
+            // Set default values
+            userCoins = 0;
+            ownedThemes = ['default'];
+            activeTheme = 'default';
+            totalTimeStudied = 0;
+            
+            saveUserData();
+            registerModal.style.display = 'none';
+            loginBtn.style.display = 'none';
+            registerBtn.style.display = 'none';
+            logoutBtn.style.display = 'block';
+            
+            // Clear registration form
+            document.getElementById('register-username').value = '';
+            document.getElementById('register-password').value = '';
+            
+            showStatusMessage(`Welcome to MANVO, ${username}!`, "success");
+        }
+
+        // Handle logout
+        function handleLogout() {
+            localStorage.removeItem('manvo_current_user');
+            currentUser = null;
+            userCoins = 0;
+            loginBtn.style.display = 'block';
+            registerBtn.style.display = 'block';
+            logoutBtn.style.display = 'none';
+            
+            // Reset theme to default
+            applyTheme('default');
+            
+            showStatusMessage("You've been logged out", "success");
+        }
+
+        // Event listeners
+        startBtn.addEventListener('click', startTimer);
+        pauseBtn.addEventListener('click', pauseTimer);
+        resetBtn.addEventListener('click', resetTimer);
+        
+        loginBtn.addEventListener('click', () => {
+            loginModal.style.display = 'flex';
+        });
+        
+        registerBtn.addEventListener('click', () => {
+            registerModal.style.display = 'flex';
+        });
+        
+        logoutBtn.addEventListener('click', handleLogout);
+        
+        loginSubmit.addEventListener('click', handleLogin);
+        registerSubmit.addEventListener('click', handleRegister);
+        
+        loginCancel.addEventListener('click', () => {
+            loginModal.style.display = 'none';
+        });
+        
+        registerCancel.addEventListener('click', () => {
+            registerModal.style.display = 'none';
+        });
+        
+        // Close modals when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === loginModal) {
+                loginModal.style.display = 'none';
+            }
+            if (e.target === registerModal) {
+                registerModal.style.display = 'none';
+            }
+        });
+        
+        // Add event listeners to theme buttons
+        buyButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const themeName = button.getAttribute('data-theme');
+                const price = parseInt(button.getAttribute('data-price'));
+                purchaseTheme(themeName, price);
+            });
+        });
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            updateTimerDisplay();
+            checkLoginStatus();
+        });
+
+        // Before page unload, save user data
+        window.addEventListener('beforeunload', () => {
+            if (currentUser) {
+                saveUserData();
+            }
+        });
+    </script>
+</body>
+</html>
