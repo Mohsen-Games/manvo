@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MANVO - Focus & Study Timer</title>
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #FFC107;
+            --background-color: #f8f9fa;
+            --text-color: #333;
+            --accent-color: #FF5722;
+            --card-bg: white;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .coin-display {
+            background-color: var(--secondary-color);
+            color: #333;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .coin-icon {
+            color: #FFD700;
+            font-size: 1.2rem;
+        }
+
+        .auth-buttons button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .auth-buttons button:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .timer-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        .timer-display {
+            font-size: 5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 20px 0;
+        }
+
+        .timer-controls {
+            display: flex;
+            gap: 15px;
+        }
+
+        .timer-controls button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .timer-controls button:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .timer-controls button.reset {
+            background-color: var(--accent-color);
+        }
+
+        .progress-container {
+            width: 100%;
+            max-width: 500px;
+            height: 10px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            margin: 30px 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background-color: var(--primary-color);
+            transition: width 1s linear;
+        }
+
+        .coins-earned {
+            font-size: 1.2rem;
+            margin-top: 10px;
+            color: var(--secondary-color);
+            font-weight: bold;
+        }
+
+        .store-section {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            text-align: center;
+        }
+
+        .themes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .theme-card {
+            background-color: var(--background-color);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .theme-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .theme-preview {
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .forest-theme {
+            background: linear-gradient(120deg, #2ecc71, #27ae60);
+        }
+
+        .ocean-theme {
+            background: linear-gradient(120deg, #3498db, #2980b9);
+        }
+
+        .sunset-theme {
+            background: linear-gradient(120deg, #e74c3c, #c0392b);
+        }
+
+        .lavender-theme {
+            background: linear-gradient(120deg, #9b59b6, #8e44ad);
+        }
+
+        .theme-info {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .theme-name {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .theme-price {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--secondary-color);
+            font-weight: bold;
+        }
+
+        .buy-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 10px;
+        }
+
+        .buy-button:hover {
+            opacity: 0.9;
+        }
+
+        .buy-button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .modal-buttons button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .modal-buttons .cancel {
+            background-color: #ddd;
+        }
+
+        .modal-buttons .submit {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .status-message {
+            text-align: center;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px 0;
+            color: #777;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .timer-display {
+                font-size: 4rem;
+            }
+
+            .timer-controls {
+                flex-direction: column;
+            }
+
+            header {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .themes-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            .timer-display {
+                font-size: 3rem;
+            }
+
+            .timer-section, .store-section {
+                padding: 20px;
+            }
+
+            .themes-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">MANVO</div>
+            <div class="user-info">
+                <div class="coin-display">
+                    <span class="coin-icon">🪙</span>
+                    <span id="coins">0</span> Coins
+                </div>
+                <div class="auth-buttons">
+                    <button id="login-btn">Login</button>
+                    <button id="register-btn">Register</button>
+                    <button id="logout-btn" style="display: none;">Logout</button>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <section class="timer-section">
+                <h2>Focus Timer</h2>
+                <div class="timer-display" id="timer">25:00</div>
+                <div class="progress-container">
+                    <div class="progress-bar" id="progress"></div>
+                </div>
+                <div class="timer-controls">
+                    <button id="start-btn">Start</button>
+                    <button id="pause-btn">Pause</button>
+                    <button class="reset" id="reset-btn">Reset</button>
+                </div>
+                <div class="coins-earned" id="earned-message"></div>
+            </section>
+
+            <section class="store-section">
+                <h2 class="section-title">Theme Store</h2>
+                <div class="status-message" id="status-message"></div>
+                <div class="themes-grid">
+                    <div class="theme-card">
+                        <div class="theme-preview forest-theme"></div>
+                        <div class="theme-info">
+                            <div class="theme-name">Forest Theme</div>
+                            <div class="theme-price"><span class="coin-icon">🪙</span> 50</div>
+                            <button class="buy-button" data-theme="forest" data-price="50">Purchase</button>
+                        </div>
+                    </div>
+                    <div class="theme-card">
+                        <div class="theme-preview ocean-theme"></div>
+                        <div class="theme-info">
+                            <div class="theme-name">Ocean Theme</div>
+                            <div class="theme-price"><span class="coin-icon">🪙</span> 75</div>
+                            <button class="buy-button" data-theme="ocean" data-price="75">Purchase</button>
+                        </div>
+                    </div>
+                    <div class="theme-card">
+                        <div class="theme-preview sunset-theme"></div>
+                        <div class="theme-info">
+                            <div class="theme-name">Sunset Theme</div>
+                            <div class="theme-price"><span class="coin-icon">🪙</span> 100</div>
+                            <button class="buy-button" data-theme="sunset" data-price="100">Purchase</button>
+                        </div>
+                    </div>
+                    <div class="theme-card">
+                        <div class="theme-preview lavender-theme"></div>
+                        <div class="theme-info">
+                            <div class="theme-name">Lavender Theme</div>
+                            <div class="theme-price"><span class="coin-icon">🪙</span> 125</div>
+                            <button class="buy-button" data-theme="lavender" data-price="125">Purchase</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            © 2025 MANVO - Stay Focused & Productive
+        </footer>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal" id="login-modal">
+        <div class="modal-content">
+            <h2 class="modal-title">Login to MANVO</h2>
+            <div class="form-group">
+                <label for="login-username">Username</label>
+                <input type="text" id="login-username" placeholder="Enter your username">
+            </div>
+            <div class="form-group">
+                <label for="login-password">Password</label>
+                <input type="password" id="login-password" placeholder="Enter your password">
+            </div>
+            <div class="modal-buttons">
+                <button class="cancel" id="login-cancel">Cancel</button>
+                <button class="submit" id="login-submit">Login</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal" id="register-modal">
+        <div class="modal-content">
+            <h2 class="modal-title">Create MANVO Account</h2>
+            <div class="form-group">
+                <label for="register-username">Username</label>
+                <input type="text" id="register-username" placeholder="Choose a username">
+            </div>
+            <div class="form-group">
+                <label for="register-password">Password</label>
+                <input type="password" id="register-password" placeholder="Choose a password">
+            </div>
+            <div class="modal-buttons">
+                <button class="cancel" id="register-cancel">Cancel</button>
+                <button class="submit" id="register-submit">Register</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // App state
+        let timer;
+        let timeLeft = 25 * 60; // 25 minutes in seconds
+        let isRunning = false;
+        let totalTimeStudied = 0;
+        let lastCheckpoint = 0;
+        let currentUser = null;
+        let userCoins = 0;
+        let ownedThemes = ['default'];
+        let activeTheme = 'default';
+
+        // Theme configurations
+        const themes = {
+            default: {
+                primaryColor: '#4CAF50',
+                secondaryColor: '#FFC107',
+                backgroundColor: '#f8f9fa',
+                textColor: '#333',
+                accentColor: '#FF5722',
+                cardBg: 'white'
+            },
+            forest: {
+                primaryColor: '#2ecc71',
+                secondaryColor: '#f1c40f',
+                backgroundColor: '#e8f5e9',
+                textColor: '#1b5e20',
+                accentColor: '#8bc34a',
+                cardBg: '#ffffff'
+            },
+            ocean: {
+                primaryColor: '#3498db',
+                secondaryColor: '#1abc9c',
+                backgroundColor: '#e3f2fd',
+                textColor: '#0d47a1',
+                accentColor: '#00bcd4',
+                cardBg: '#ffffff'
+            },
+            sunset: {
+                primaryColor: '#e74c3c',
+                secondaryColor: '#f39c12',
+                backgroundColor: '#ffebee',
+                textColor: '#b71c1c',
+                accentColor: '#ff9800',
+                cardBg: '#ffffff'
+            },
+            lavender: {
+                primaryColor: '#9b59b6',
+                secondaryColor: '#3498db',
+                backgroundColor: '#f3e5f5',
+                textColor: '#4a148c',
+                accentColor: '#7e57c2',
+                cardBg: '#ffffff'
+            }
+        };
+
+        // Elements
+        const timerDisplay = document.getElementById('timer');
+        const progressBar = document.getElementById('progress');
+        const startBtn = document.getElementById('start-btn');
+        const pauseBtn = document.getElementById('pause-btn');
+        const resetBtn = document.getElementById('reset-btn');
+        const coinsDisplay = document.getElementById('coins');
+        const earnedMessage = document.getElementById('earned-message');
+        const loginBtn = document.getElementById('login-btn');
+        const registerBtn = document.getElementById('register-btn');
+        const logoutBtn = document.getElementById('logout-btn');
+        const loginModal = document.getElementById('login-modal');
+        const registerModal = document.getElementById('register-modal');
+        const loginSubmit = document.getElementById('login-submit');
+        const registerSubmit = document.getElementById('register-submit');
+        const loginCancel = document.getElementById('login-cancel');
+        const registerCancel = document.getElementById('register-cancel');
+        const statusMessage = document.getElementById('status-message');
+        const buyButtons = document.querySelectorAll('.buy-button');
+
+        // Format time (seconds -> MM:SS)
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        // Update timer display
+        function updateTimerDisplay() {
+            timerDisplay.textContent = formatTime(timeLeft);
+            
+            // Update progress bar (percentage of time elapsed)
+            const totalTime = 25 * 60; // 25 minutes
+            const percentComplete = ((totalTime - timeLeft) / totalTime) * 100;
+            progressBar.style.width = `${percentComplete}%`;
+        }
+
+        // Start timer
+        function startTimer() {
+            if (!isRunning) {
+                isRunning = true;
+                lastCheckpoint = Math.floor(totalTimeStudied / (30 * 60)); // Number of 30-min completed
+                
+                timer = setInterval(() => {
+                    if (timeLeft > 0) {
+                        timeLeft--;
+                        totalTimeStudied++;
+                        
+                        // Check if we've reached a new 30-minute mark
+                        const currentCheckpoint = Math.floor(totalTimeStudied / (30 * 60));
+                        if (currentCheckpoint > lastCheckpoint) {
+                            awardCoins(10); // Award 10 coins per 30 minutes
+                            lastCheckpoint = currentCheckpoint;
+                            earnedMessage.textContent = "You earned 10 coins! 🎉";
+                            setTimeout(() => {
+                                earnedMessage.textContent = "";
+                            }, 3000);
+                        }
+                        
+                        updateTimerDisplay();
+                    } else {
+                        pauseTimer();
+                        resetTimer();
+                    }
+                }, 1000);
+            }
+        }
+
+        // Pause timer
+        function pauseTimer() {
+            if (isRunning) {
+                isRunning = false;
+                clearInterval(timer);
+            }
+        }
+
+        // Reset timer
+        function resetTimer() {
+            pauseTimer();
+            timeLeft = 25 * 60;
+            updateTimerDisplay();
+        }
+
+        // Award coins to the user
+        function awardCoins(amount) {
+            if (currentUser) {
+                userCoins += amount;
+                updateCoinsDisplay();
+                saveUserData();
+            }
+        }
+
+        // Update the coins display
+        function updateCoinsDisplay() {
+            coinsDisplay.textContent = userCoins;
+        }
+
+        // Save user data to localStorage
+        function saveUserData() {
+            if (currentUser) {
+                const userData = {
+                    coins: userCoins,
+                    ownedThemes: ownedThemes,
+                    activeTheme: activeTheme,
+                    totalTimeStudied: totalTimeStudied
+                };
+                
+                localStorage.setItem(`manvo_${currentUser}`, JSON.stringify(userData));
+            }
+        }
+
+        // Load user data from localStorage
+        function loadUserData(username) {
+            const userData = localStorage.getItem(`manvo_${username}`);
+            
+            if (userData) {
+                const parsedData = JSON.parse(userData);
+                userCoins = parsedData.coins || 0;
+                ownedThemes = parsedData.ownedThemes || ['default'];
+                activeTheme = parsedData.activeTheme || 'default';
+                totalTimeStudied = parsedData.totalTimeStudied || 0;
+                
+                updateCoinsDisplay();
+                applyTheme(activeTheme);
+                updateThemeButtons();
+            } else {
+                // New user
+                userCoins = 0;
+                ownedThemes = ['default'];
+                activeTheme = 'default';
+                totalTimeStudied = 0;
+                
+                updateCoinsDisplay();
+                applyTheme('default');
+                updateThemeButtons();
+            }
+        }
+
+        // Apply theme to the website
+        function applyTheme(themeName) {
+            const theme = themes[themeName];
+            if (!theme) return;
+            
+            document.documentElement.style.setProperty('--primary-color', theme.primaryColor);
+            document.documentElement.style.setProperty('--secondary-color', theme.secondaryColor);
+            document.documentElement.style.setProperty('--background-color', theme.backgroundColor);
+            document.documentElement.style.setProperty('--text-color', theme.textColor);
+            document.documentElement.style.setProperty('--accent-color', theme.accentColor);
+            document.documentElement.style.setProperty('--card-bg', theme.cardBg);
+            
+            activeTheme = themeName;
+            saveUserData();
+        }
+
+        // Update theme buttons to show which are owned/active
+        function updateThemeButtons() {
+            buyButtons.forEach(button => {
+                const themeName = button.getAttribute('data-theme');
+                
+                if (ownedThemes.includes(themeName)) {
+                    if (activeTheme === themeName) {
+                        button.textContent = "Active";
+                        button.disabled = true;
+                    } else {
+                        button.textContent = "Apply";
+                    }
+                } else {
+                    button.textContent = "Purchase";
+                }
+            });
+        }
+
+        // Purchase a theme
+        function purchaseTheme(themeName, price) {
+            if (!currentUser) {
+                showStatusMessage("Please log in to purchase themes", "error");
+                return;
+            }
+            
+            if (ownedThemes.includes(themeName)) {
+                // Already owned, apply it
+                applyTheme(themeName);
+                updateThemeButtons();
+                showStatusMessage(`${themeName.charAt(0).toUpperCase() + themeName.slice(1)} theme applied!`, "success");
+            } else {
+                // Not owned, try to purchase
+                if (userCoins >= price) {
+                    userCoins -= price;
+                    ownedThemes.push(themeName);
+                    applyTheme(themeName);
+                    updateCoinsDisplay();
+                    updateThemeButtons();
+                    saveUserData();
+                    showStatusMessage(`${themeName.charAt(0).toUpperCase() + themeName.slice(1)} theme purchased and applied!`, "success");
+                } else {
+                    showStatusMessage(`Not enough coins! You need ${price - userCoins} more coins.`, "error");
+                }
+            }
+        }
+
+        // Show status message
+        function showStatusMessage(message, type) {
+            statusMessage.textContent = message;
+            statusMessage.className = `status-message ${type}`;
+            statusMessage.style.display = "block";
+            
+            setTimeout(() => {
+                statusMessage.style.display = "none";
+            }, 3000);
+        }
+
+        // Check if user is logged in (from localStorage)
+        function checkLoginStatus() {
+            const loggedInUser = localStorage.getItem('manvo_current_user');
+            
+            if (loggedInUser) {
+                currentUser = loggedInUser;
+                loginBtn.style.display = 'none';
+                registerBtn.style.display = 'none';
+                logoutBtn.style.display = 'block';
+                loadUserData(currentUser);
+            } else {
+                loginBtn.style.display = 'block';
+                registerBtn.style.display = 'block';
+                logoutBtn.style.display = 'none';
+            }
+        }
+
+        // Handle login
+        function handleLogin() {
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+            
+            if (!username || !password) {
+                alert("Please enter both username and password");
+                return;
+            }
+            
+            // Simple password check (in real app, this would be more secure)
+            const storedPassword = localStorage.getItem(`manvo_password_${username}`);
+            
+            if (storedPassword === password) {
+                currentUser = username;
+                localStorage.setItem('manvo_current_user', username);
+                loadUserData(username);
+                loginModal.style.display = 'none';
+                loginBtn.style.display = 'none';
+                registerBtn.style.display = 'none';
+                logoutBtn.style.display = 'block';
+                
+                // Clear login form
+                document.getElementById('login-username').value = '';
+                document.getElementById('login-password').value = '';
+                
+                showStatusMessage(`Welcome back, ${username}!`, "success");
+            } else {
+                alert("Invalid username or password");
+            }
+        }
+
+        // Handle registration
+        function handleRegister() {
+            const username = document.getElementById('register-username').value;
+            const password = document.getElementById('register-password').value;
+            
+            if (!username || !password) {
+                alert("Please enter both username and password");
+                return;
+            }
+            
+            // Check if username already exists
+            if (localStorage.getItem(`manvo_password_${username}`)) {
+                alert("Username already exists. Please choose another one.");
+                return;
+            }
+            
+            // Store user credentials (in real app, this would be more secure)
+            localStorage.setItem(`manvo_password_${username}`, password);
+            
+            // Create initial user data
+            currentUser = username;
+            localStorage.setItem('manvo_current_user', username);
+            
+            // Set default values
+            userCoins = 0;
+            ownedThemes = ['default'];
+            activeTheme = 'default';
+            totalTimeStudied = 0;
+            
+            saveUserData();
+            registerModal.style.display = 'none';
+            loginBtn.style.display = 'none';
+            registerBtn.style.display = 'none';
+            logoutBtn.style.display = 'block';
+            
+            // Clear registration form
+            document.getElementById('register-username').value = '';
+            document.getElementById('register-password').value = '';
+            
+            showStatusMessage(`Welcome to MANVO, ${username}!`, "success");
+        }
+
+        // Handle logout
+        function handleLogout() {
+            localStorage.removeItem('manvo_current_user');
+            currentUser = null;
+            userCoins = 0;
+            loginBtn.style.display = 'block';
+            registerBtn.style.display = 'block';
+            logoutBtn.style.display = 'none';
+            
+            // Reset theme to default
+            applyTheme('default');
+            
+            showStatusMessage("You've been logged out", "success");
+        }
+
+        // Event listeners
+        startBtn.addEventListener('click', startTimer);
+        pauseBtn.addEventListener('click', pauseTimer);
+        resetBtn.addEventListener('click', resetTimer);
+        
+        loginBtn.addEventListener('click', () => {
+            loginModal.style.display = 'flex';
+        });
+        
+        registerBtn.addEventListener('click', () => {
+            registerModal.style.display = 'flex';
+        });
+        
+        logoutBtn.addEventListener('click', handleLogout);
+        
+        loginSubmit.addEventListener('click', handleLogin);
+        registerSubmit.addEventListener('click', handleRegister);
+        
+        loginCancel.addEventListener('click', () => {
+            loginModal.style.display = 'none';
+        });
+        
+        registerCancel.addEventListener('click', () => {
+            registerModal.style.display = 'none';
+        });
+        
+        // Close modals when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === loginModal) {
+                loginModal.style.display = 'none';
+            }
+            if (e.target === registerModal) {
+                registerModal.style.display = 'none';
+            }
+        });
+        
+        // Add event listeners to theme buttons
+        buyButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const themeName = button.getAttribute('data-theme');
+                const price = parseInt(button.getAttribute('data-price'));
+                purchaseTheme(themeName, price);
+            });
+        });
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            updateTimerDisplay();
+            checkLoginStatus();
+        });
+
+        // Before page unload, save user data
+        window.addEventListener('beforeunload', () => {
+            if (currentUser) {
+                saveUserData();
+            }
+        });
+    </script>
+</body>
+</html>
